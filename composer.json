@@ -1,5 +1,5 @@
 {
-    "name": "fomvasss/laravel-meta-tags",
+    "name": "roo777/laravel-meta-tags",
     "description": "A package to manage SEO (meta-tags, xml-fields, etc.)",
     "type": "composer-package",
     "keywords": ["meta tags", "meta", "tags", "seo", "seo", "sitemap", "xml-map", "laravel"],
@@ -20,7 +20,10 @@
     "autoload": {
         "psr-4": {
             "Fomvasss\\LaravelMetaTags\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {

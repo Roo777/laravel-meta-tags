@@ -19,6 +19,7 @@ class Builder
      * @var string
      */
     protected $path;
+    protected $pathOptions;
 
     /**
      * Force set tags.
@@ -101,11 +102,12 @@ class Builder
      * @param string $path
      * @return $this
      */
-    public function setPath(string $path = null)
+    public function setPath(string $path = null, $pathOptions = null)
     {
         $this->pathModel = null;
 
         $this->path = $path ?: \Illuminate\Support\Facades\Request::path();
+        $this->pathOptions = $pathOptions;
 
         return $this;
     }
@@ -141,6 +143,10 @@ class Builder
      */
     public function get(): array
     {
+        if (!empty($this->result)) {
+            return $this->getResult();
+        }
+
         if ($this->entityModel) {
             $this->result = $this->getForEntity();
         }
@@ -193,7 +199,8 @@ class Builder
             if (!isset($this->pathModel)) { // Singleton
                 $modelClass = config('meta-tags.model', \Fomvasss\LaravelMetaTags\Models\MetaTag::class);
                 try {
-                    $this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
+                    //$this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
+                    $this->pathModel = $modelClass::getByPath($this->path, $this->pathOptions) ?? 0;
                 } catch (\Exception $e) {
                     //...
                 }

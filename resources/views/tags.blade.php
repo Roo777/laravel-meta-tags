@@ -1,10 +1,10 @@
 @if(count($tags))
     @foreach(config('meta-tags.available') as $key => $option)
-        @if (isset($tags[$key]))
+        @if (isset($tags[$key]) && !in_array($key, ['h1']))
             @if($key === 'canonical' && $tags[$key])
                 <link rel="canonical" href="{{ url($tags[$key]) }}"/>
             @elseif($key === 'title')
-                <title>{{ $tags[$key] }}</title>
+                <title>{{ $tags[$key] ?? '' }}</title>
             @elseif($key === 'description')
                 <meta name="description" content="{{ $tags[$key] }}"/>
             @elseif($key === 'keywords')
